@@ -1,0 +1,47 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "nome": "Raul Santos",
+      "age": 22
+    },
+    {
+      "id": 2,
+      "nome": "Vinicius albert",
+      "age": 23
+    },
+    {
+      "id": 3,
+      "nome": "Chico Xavier",
+      "age": 26
+    },
+    {
+      "id": 4,
+      "nome": "Jsé Santos",
+      "age": 42
+    }
+  ],
+
+  "notifications": [
+    {
+      "id": 1,
+      "message": "Nova notificação",
+      "url": "www.asisto.com.br"
+    },
+    {
+      "id": 2,
+      "message": "Nova notificação",
+      "url": "www.asisto.com.br"
+    },
+    {
+      "id": 3,
+      "message": "Nova notificação",
+      "url": "www.asisto.com.br"
+    },
+    {
+      "id": 4,
+      "message": "Nova notificação",
+      "url": "www.asisto.com.br"
+    }
+  ]
+}
