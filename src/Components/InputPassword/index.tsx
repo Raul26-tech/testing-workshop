@@ -1,18 +1,13 @@
-/* eslint-disable react/function-component-definition */
 import React, {
-  ForwardedRef,
-  forwardRef,
   ForwardRefRenderFunction,
-  HTMLAttributes,
-  HTMLInputTypeAttribute,
   InputHTMLAttributes,
-  useRef,
+  forwardRef,
   useState,
 } from "react";
 import { FieldError } from "react-hook-form";
 import { HiEyeOff, HiEye } from "react-icons/hi";
 
-interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
+interface IInputPasswordProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   labelClassName?: string;
   addLabelClassName?: string;
@@ -20,15 +15,14 @@ interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
   error?: FieldError;
   colorClassName?: string;
   enableView?: boolean;
-  mask?: "cep" | "cnpj" | "cpf" | "phone" | "cellPhone";
 }
 
-// Analisar mais opções de autocomplete
-// https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete
-
-const InputBase: ForwardRefRenderFunction<HTMLInputElement, IInputProps> = (
+export const InputPassword: ForwardRefRenderFunction<
+  HTMLInputElement,
+  IInputPasswordProps
+> = (
   {
-    error = null,
+    error,
     label,
     labelClassName = `
             block
@@ -64,7 +58,6 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, IInputProps> = (
     onFocus,
     colorClassName = disabled ? "bg-gmov-input" : "",
     maxLength,
-    mask,
     autoComplete = "off",
     enableView = false,
     ...rest
@@ -80,69 +73,9 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, IInputProps> = (
       <input
         className={`${className} ${colorClassName} pt-2 md:pt-3 `}
         {...rest}
-        ref={ref}
         autoComplete={autoComplete}
         disabled={disabled}
         type={viewPassword}
-        onFocus={(e) => {
-          if (e.target.value) {
-            if (type === "number") {
-              const value = Number(e.target.value);
-              if (value === 0) {
-                e.target.value = "";
-              }
-            }
-
-            if (mask) {
-              e.target.value = e.target.value
-                .replace(/\D/g, "")
-                .substring(0, Number(maxLength || e.target.value.length));
-            }
-          }
-
-          if (onFocus) {
-            return onFocus(e);
-          }
-        }}
-        onBlur={(e) => {
-          if (!e.target.value) {
-            if (type === "number") {
-              const value = Number(e.target.value);
-              if (value === 0) {
-                e.target.value = "0";
-              }
-            }
-          } else if (mask === "cep") {
-            e.target.value = e.target.value.replace(
-              /^(\d{5})(\d{3})+?$/,
-              "$1-$2"
-            );
-          } else if (mask === "cnpj") {
-            e.target.value = e.target.value.replace(
-              /^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})+?$/,
-              "$1.$2.$3/$4-$5"
-            );
-          } else if (mask === "cpf") {
-            e.target.value = e.target.value.replace(
-              /^(\d{3})(\d{3})(\d{3})(\d{2})$/,
-              "$1.$2.$3-$4"
-            );
-          } else if (mask === "phone") {
-            e.target.value = e.target.value.replace(
-              /^(\d{2})(\d{4})(\d{4})+?$/,
-              "($1) $2-$3"
-            );
-          } else if (mask === "cellPhone") {
-            e.target.value = e.target.value.replace(
-              /^(\d{2})(\d{5})(\d{4})+?$/,
-              "($1) $2-$3"
-            );
-          }
-
-          if (onBlur) {
-            return onBlur(e);
-          }
-        }}
       />
       {enableView && (
         <div className="absolute w-9 h-9 p-1 top-[8.5rem] left-[27rem] flex ">
@@ -170,4 +103,4 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, IInputProps> = (
   );
 };
 
-export const Input = forwardRef(InputBase);
+export const Input = forwardRef(InputPassword);
